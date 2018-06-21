@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "353010825616",
+    "firebase_url": "https://inspection-report-d351.firebaseio.com",
+    "project_id": "inspection-report-d351",
+    "storage_bucket": "inspection-report-d351.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353010825616:android:d95898088339eb21",
+        "android_client_info": {
+          "package_name": "adexe.alifian.inspectionreportd351"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353010825616-ouep2ibsjfnf7afgtpihmcrdf5vt7591.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "adexe.alifian.inspectionreportd351",
+            "certificate_hash": "a0c078459d62411e79cea8cbd867bdb7b493baf8"
+          }
+        },
+        {
+          "client_id": "353010825616-i3amos6rf2fqq822sbbigi9fnqamjoku.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "353010825616-i3amos6rf2fqq822sbbigi9fnqamjoku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLb0GuuRLOGHWsiEuHKqvyoyCb3RoguQ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353010825616-i3amos6rf2fqq822sbbigi9fnqamjoku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
