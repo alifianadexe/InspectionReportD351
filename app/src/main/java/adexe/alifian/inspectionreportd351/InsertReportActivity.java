@@ -1,16 +1,25 @@
 package adexe.alifian.inspectionreportd351;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +43,7 @@ public class InsertReportActivity extends AppBaseActivity{
     EditText txt_no_polisi, txt_no_costumer, txt_catatan;
     Spinner lst_tipe, lst_mekanik;
     Button btn_insert;
-
+    Merlin merlin;
     ArrayList<ReportObject> report;
 
     DatabaseReference databaseReport;
@@ -68,6 +77,19 @@ public class InsertReportActivity extends AppBaseActivity{
         adp_mekanik.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lst_mekanik.setAdapter(adp_mekanik);
 
+        List<String> list_tipe = new ArrayList<String>();
+        list_tipe.add("AVANZA");
+        list_tipe.add("TOYOTA");
+        list_tipe.add("MAKENKI");
+        list_tipe.add("DROP");
+
+        ArrayAdapter<String> adp_tipe = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,list_tipe);
+
+        adp_tipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lst_tipe.setAdapter(adp_tipe);
+
+
+
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +97,27 @@ public class InsertReportActivity extends AppBaseActivity{
             }
         });
 
+        merlin = new Merlin.Builder().withConnectableCallbacks().build(getApplicationContext());
+        merlin.registerConnectable(new Connectable() {
+            @Override
+            public void onConnect() {
+                getStatus("Network Connected!", android.R.color.holo_green_light);
+            }
+        });
+
+        merlin.registerDisconnectable(new Disconnectable() {
+            @Override
+            public void onDisconnect() {
+                getStatus("Network Disconnected!", android.R.color.holo_red_light);
+            }
+        });
+
+        merlin.registerBindable(new Bindable() {
+            @Override
+            public void onBind(NetworkStatus networkStatus) {
+                getStatus("Connecting..", android.R.color.holo_blue_dark);
+            }
+        });
     }
 
     public void addReport(){
@@ -83,7 +126,8 @@ public class InsertReportActivity extends AppBaseActivity{
         String catatan = txt_catatan.getText().toString();
         String no_customer = txt_no_costumer.getText().toString();
         String tipe = lst_tipe.getSelectedItem().toString();
-        String mekanik = lst_tipe.getSelectedItem().toString();
+        String mekanik = lst_mekanik.getSelectedItem().toString();
+
 
         if(!TextUtils.isEmpty(no_polisi)){
 
@@ -104,6 +148,32 @@ public class InsertReportActivity extends AppBaseActivity{
         }else{
             Toast.makeText(this, "No Polisi Wajib Diisi!",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        merlin.bind();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        merlin.unbind();
+    }
+
+    public void getStatus(String str, int status){
+
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),str, Snackbar.LENGTH_LONG);
+        View view = snackbar.getView();
+
+        view.setBackgroundColor(ContextCompat.getColor(this, status));
+
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+        params.gravity = Gravity.TOP;
+
+        view.setLayoutParams(params);
+        snackbar.show();
 
     }
  }
