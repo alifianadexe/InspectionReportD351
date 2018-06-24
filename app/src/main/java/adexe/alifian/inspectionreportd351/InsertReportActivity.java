@@ -145,6 +145,7 @@ public class InsertReportActivity extends AppBaseActivity{
             databaseReport.child(id).setValue(reportObject);
 
             Toast.makeText(this, "Report Added!", Toast.LENGTH_SHORT).show();
+
         }else{
             Toast.makeText(this, "No Polisi Wajib Diisi!",Toast.LENGTH_SHORT).show();
         }

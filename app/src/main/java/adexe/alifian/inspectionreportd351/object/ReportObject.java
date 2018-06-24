@@ -35,7 +35,7 @@ public class ReportObject {
         return mekanik;
     }
 
-    public String getNo_polisi(){
+    public String getNoPolisi(){
         return no_polisi;
     }
 
@@ -43,7 +43,7 @@ public class ReportObject {
         return catatan;
     }
 
-    public String getNo_telp_customer(){
+    public String getNoTelpCustomer(){
         return no_telp_customer;
     }
 
