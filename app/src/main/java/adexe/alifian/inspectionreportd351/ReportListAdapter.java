@@ -1,5 +1,6 @@
 package adexe.alifian.inspectionreportd351;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
             lbl_mekanik = (TextView) itemView.findViewById(R.id.lbl_mekanik);
             lbl_timestamp = (TextView) itemView.findViewById(R.id.lbl_timestamp);
 
+
             btn_detail = (Button) itemView.findViewById(R.id.btn_detail);
             btn_delete = (Button) itemView.findViewById(R.id.btn_delete);
             btn_edit = (Button) itemView.findViewById(R.id.btn_edit);
@@ -59,6 +61,38 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
         holder.lbl_mekanik.setText(datalist.get(position).getMekanik());
         holder.lbl_no_polisi.setText(datalist.get(position).getNoPolisi());
 
+        final int getPosition = position;
+
+        holder.btn_detail.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                //custom dialog
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.detail_popups);
+                dialog.setTitle("Detail");
+
+                TextView lbl_no_customer = (TextView) dialog.findViewById(R.id.lbl_no_customer);
+                TextView lbl_catatan = (TextView) dialog.findViewById(R.id.lbl_catatan);
+                TextView lbl_tipe = (TextView) dialog.findViewById(R.id.lbl_tipe);
+
+                lbl_catatan.setText(datalist.get(getPosition).getCatatan());
+                lbl_no_customer.setText(datalist.get(getPosition).getNoTelpCustomer());
+                lbl_tipe.setText(datalist.get(getPosition).getType());
+
+                Button dialogClose = (Button) dialog.findViewById(R.id.btn_close_popups);
+                // if button dialog
+
+                dialogClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+
+        });
     }
 
     @Override

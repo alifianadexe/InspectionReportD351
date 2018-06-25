@@ -69,7 +69,7 @@ public class ViewReportActivity extends AppBaseActivity {
                     dataReport.add(report);
                 }
 
-                adapter = new ReportListAdapter(getApplicationContext(), dataReport);
+                adapter = new ReportListAdapter(ViewReportActivity.this, dataReport);
                 recycleView.setAdapter(adapter);
             }
 
