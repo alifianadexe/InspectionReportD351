@@ -5,26 +5,31 @@ package adexe.alifian.inspectionreportd351.object;
  */
 
 public class ReportObject {
-    private String id;
+
+    private String reportId;
     private String timeStamp;
     private String mekanik;
-    private String no_polisi;
+    private String noPolisi;
     private String catatan;
-    private String no_telp_customer;
+    private String noTelpCustomer;
     private String type;
 
-    public ReportObject(String id,String timeStamp, String mekanik, String no_polisi, String catatan,String no_telp_customer, String type){
-        this.id = id;
-        this.timeStamp = timeStamp;
+    public ReportObject(String noPolisi,String mekanik,String catatan, String type,String reportId,String timeStamp,String noTelpCustomer){
+        this.noPolisi = noPolisi;
         this.mekanik = mekanik;
-        this.no_polisi = no_polisi;
         this.catatan = catatan;
-        this.no_telp_customer = no_telp_customer;
         this.type = type;
+        this.reportId = reportId;
+        this.timeStamp = timeStamp;
+        this.noTelpCustomer = noTelpCustomer;
     }
 
+    public ReportObject(){
+    }
+
+
     public String getReportId(){
-        return id;
+        return reportId;
     }
 
     public String getTimeStamp(){
@@ -36,7 +41,7 @@ public class ReportObject {
     }
 
     public String getNoPolisi(){
-        return no_polisi;
+        return noPolisi;
     }
 
     public String getCatatan(){
@@ -44,7 +49,7 @@ public class ReportObject {
     }
 
     public String getNoTelpCustomer(){
-        return no_telp_customer;
+        return noTelpCustomer;
     }
 
     public String getType(){

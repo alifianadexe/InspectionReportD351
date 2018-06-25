@@ -1,6 +1,7 @@
 package adexe.alifian.inspectionreportd351;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -8,8 +9,10 @@ import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.novoda.merlin.Merlin;
 import com.novoda.merlin.NetworkStatus;
 import com.novoda.merlin.registerable.bind.Bindable;
@@ -40,11 +43,19 @@ public class MainActivity extends AppBaseActivity {
             }
         });
 
-        merlin = new Merlin.Builder().withConnectableCallbacks().build(getApplicationContext());
+        crd_view_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),ViewReportActivity.class);
+                startActivity(i);
+            }
+        });
+        merlin = new Merlin.Builder().withBindableCallbacks().withDisconnectableCallbacks().withConnectableCallbacks().withAllCallbacks().build(getApplicationContext());
+
         merlin.registerConnectable(new Connectable() {
             @Override
             public void onConnect() {
-                getStatus("Network Connected!", android.R.color.holo_green_light);
+                getStatus("Network Connected!", android.R.color.holo_green_dark);
             }
         });
 
@@ -54,6 +65,8 @@ public class MainActivity extends AppBaseActivity {
                 getStatus("Network Disconnected!", android.R.color.holo_red_light);
             }
         });
+
+
 
         merlin.registerBindable(new Bindable() {
             @Override
@@ -75,19 +88,19 @@ public class MainActivity extends AppBaseActivity {
         merlin.unbind();
     }
 
+
+
     public void getStatus(String str, int status){
 
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),str, Snackbar.LENGTH_LONG);
-        View view = snackbar.getView();
+        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), str, TSnackbar.LENGTH_LONG);
+//      snackbar.setActionTextColor(Color.WHITE);
 
-        view.setBackgroundColor(ContextCompat.getColor(this, status));
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(this,status));
 
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
-        params.gravity = Gravity.TOP;
-
-        view.setLayoutParams(params);
+        TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
         snackbar.show();
-
     }
 
 }

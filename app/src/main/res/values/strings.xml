@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Inspection Report D351</string>
+    <string name="app_name"></string>
+    <string-array name="mekanik">
+        <item>Adexe</item>
+        <item>Mabshikuo</item>
+        <item>Jumasasd</item>
+        <item>askdjasd</item>
+    </string-array>
 </resources>

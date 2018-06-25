@@ -1,18 +1,22 @@
 package adexe.alifian.inspectionreportd351;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.novoda.merlin.Merlin;
@@ -21,6 +25,7 @@ import com.novoda.merlin.registerable.bind.Bindable;
 import com.novoda.merlin.registerable.connection.Connectable;
 import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,27 +73,84 @@ public class InsertReportActivity extends AppBaseActivity{
         btn_insert = (Button) findViewById(R.id.btn_insert);
 
         List<String> list_mekanik = new ArrayList<String>();
+        list_mekanik.add("- Pilih Mekanik -");
         list_mekanik.add("Adi");
         list_mekanik.add("Domber");
         list_mekanik.add("Adexe");
 
-        ArrayAdapter<String> adp_mekanik = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,list_mekanik);
+        ArrayAdapter<String> adp_mekanik = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,list_mekanik){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
 
         adp_mekanik.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lst_mekanik.setAdapter(adp_mekanik);
 
         List<String> list_tipe = new ArrayList<String>();
+        list_tipe.add("- Pilih Tipe -");
         list_tipe.add("AVANZA");
         list_tipe.add("TOYOTA");
         list_tipe.add("MAKENKI");
         list_tipe.add("DROP");
 
-        ArrayAdapter<String> adp_tipe = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,list_tipe);
+
+        ArrayAdapter<String> adp_tipe = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,list_tipe){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
 
         adp_tipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lst_tipe.setAdapter(adp_tipe);
-
-
 
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +159,12 @@ public class InsertReportActivity extends AppBaseActivity{
             }
         });
 
-        merlin = new Merlin.Builder().withConnectableCallbacks().build(getApplicationContext());
+        merlin = new Merlin.Builder().withBindableCallbacks().withDisconnectableCallbacks().withConnectableCallbacks().withAllCallbacks().build(getApplicationContext());
+
         merlin.registerConnectable(new Connectable() {
             @Override
             public void onConnect() {
-                getStatus("Network Connected!", android.R.color.holo_green_light);
+                getStatus("Network Connected!", android.R.color.holo_green_dark);
             }
         });
 
@@ -132,20 +195,19 @@ public class InsertReportActivity extends AppBaseActivity{
         if(!TextUtils.isEmpty(no_polisi)){
 
             //get now Date
-
-            String nowDate = Calendar.getInstance().getTime().toString();
+            String nowDate = new SimpleDateFormat("EEEE, dd MMMM yyyy hh:mm:ss").format(Calendar.getInstance().getTime()).toString();
 
             // generate unique id using push().getKey()
             String id = databaseReport.push().getKey();
 
             //creating a report object
-            ReportObject reportObject = new ReportObject(id,nowDate,mekanik,no_polisi,catatan,no_customer,tipe);
+            ReportObject reportObject = new ReportObject(no_polisi,mekanik,catatan,tipe,id,nowDate,no_customer);
 
             //save
             databaseReport.child(id).setValue(reportObject);
 
             Toast.makeText(this, "Report Added!", Toast.LENGTH_SHORT).show();
-
+            clearData();
         }else{
             Toast.makeText(this, "No Polisi Wajib Diisi!",Toast.LENGTH_SHORT).show();
         }
@@ -164,17 +226,20 @@ public class InsertReportActivity extends AppBaseActivity{
     }
 
     public void getStatus(String str, int status){
+        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), str, TSnackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.WHITE);
 
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),str, Snackbar.LENGTH_LONG);
-        View view = snackbar.getView();
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(this,status));
 
-        view.setBackgroundColor(ContextCompat.getColor(this, status));
-
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
-        params.gravity = Gravity.TOP;
-
-        view.setLayoutParams(params);
+        TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
         snackbar.show();
+    }
 
+    public void clearData(){
+        txt_catatan.setText("");
+        txt_no_polisi.setText("");
+        txt_no_costumer.setText("");
     }
  }

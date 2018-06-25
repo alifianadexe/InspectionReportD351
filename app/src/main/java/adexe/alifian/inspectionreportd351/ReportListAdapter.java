@@ -59,8 +59,6 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
         holder.lbl_mekanik.setText(datalist.get(position).getMekanik());
         holder.lbl_no_polisi.setText(datalist.get(position).getNoPolisi());
 
-
-
     }
 
     @Override

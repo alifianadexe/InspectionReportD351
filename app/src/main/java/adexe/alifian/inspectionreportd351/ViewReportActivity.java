@@ -3,6 +3,7 @@ package adexe.alifian.inspectionreportd351;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.google.firebase.database.DataSnapshot;
@@ -63,10 +64,10 @@ public class ViewReportActivity extends AppBaseActivity {
                 dataReport.clear();
 
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                    Log.e("REPORT",postSnapshot.toString());
                     ReportObject report = postSnapshot.getValue(ReportObject.class);
                     dataReport.add(report);
                 }
-
 
                 adapter = new ReportListAdapter(getApplicationContext(), dataReport);
                 recycleView.setAdapter(adapter);
