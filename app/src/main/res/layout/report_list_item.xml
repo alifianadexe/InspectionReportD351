@@ -6,7 +6,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="85dp"
         android:layout_margin="8dp">
 
         <RelativeLayout
@@ -46,10 +46,13 @@
                 android:id="@+id/lbl_mekanik"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/lbl_no_polisi"
-                android:layout_toEndOf="@+id/btn_edit"
+
                 android:text="Mekanik : "
-                android:textSize="12sp" />
+                android:textSize="13sp"
+                android:layout_alignBaseline="@+id/lbl_no_polisi"
+                android:layout_alignBottom="@+id/lbl_no_polisi"
+                android:layout_toEndOf="@+id/textView8"
+                android:layout_marginStart="12dp" />
 
             <Button
                 android:id="@+id/btn_edit"
@@ -60,7 +63,7 @@
                 android:backgroundTint="@android:color/holo_blue_dark"
                 android:text="Edit"
                 android:textColor="@android:color/white"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btn_detail"
@@ -70,7 +73,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_below="@+id/lbl_timestamp"
                 android:text="Detail"
-                android:textSize="10sp" />
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/btn_delete"
@@ -81,7 +84,25 @@
                 android:backgroundTint="@android:color/holo_red_light"
                 android:text="Delete"
                 android:textColor="@android:color/white"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/lbl_timestamp"
+                android:layout_alignStart="@+id/btn_edit"
+                android:layout_marginStart="11dp"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/logo"
+                android:layout_alignTop="@+id/lbl_mekanik"
+                android:layout_toEndOf="@+id/textView6"
+                android:layout_marginStart="10dp" />
 
         </RelativeLayout>
 

@@ -2,12 +2,19 @@ package adexe.alifian.inspectionreportd351;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
@@ -23,10 +30,16 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
 
     private ArrayList<ReportObject> datalist;
     private Context context;
+    private DatabaseReference databaseReport;
+    public ReportListAdapter(Context context, ArrayList<ReportObject> datalist, DatabaseReference databaseReport){
 
-    public ReportListAdapter(Context context, ArrayList<ReportObject> datalist){
         this.context = context;
         this.datalist = datalist;
+        this.databaseReport = databaseReport;
+
+        if(datalist.size() == 0){
+            Toast.makeText(context,"Nothing to show",Toast.LENGTH_LONG).show();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -55,7 +68,7 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         holder.lbl_timestamp.setText(datalist.get(position).getTimeStamp());
         holder.lbl_mekanik.setText(datalist.get(position).getMekanik());
@@ -93,6 +106,28 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
             }
 
         });
+
+        holder.btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                deleteReport(datalist.get(position).getReportId());
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Hapus Report ini?").setPositiveButton("Yes",dialog).setNegativeButton("No",dialog).show();
+            }
+        });
+
     }
 
     @Override
@@ -100,5 +135,19 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
         return datalist.size();
     }
 
+    public void deleteReport(String id){
 
+        // set database remove value
+        DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Report").child(id);
+        // remove value
+        dr.removeValue();
+
+        Toast.makeText(context,"Report Deleted!",Toast.LENGTH_LONG).show();
+    }
+
+    public void updateReport(String no_polisi,String mekanik, String catatan, String tipe, String nowDate, String id,String no_customer){
+
+        //creating a report object
+        ReportObject reportObject = new ReportObject(no_polisi,mekanik,catatan,tipe,id, nowDate,no_customer);
+    }
 }
