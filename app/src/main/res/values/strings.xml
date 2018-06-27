@@ -1,9 +1,24 @@
 <resources>
     <string name="app_name"></string>
-    <string-array name="mekanik">
-        <item>Adexe</item>
-        <item>Mabshikuo</item>
-        <item>Jumasasd</item>
-        <item>askdjasd</item>
-    </string-array>
+    <string name="mekanik">
+        <item>Reza</item>
+        <item>Sapta</item>
+        <item>Abi</item>
+        <item>Chandika</item>
+        <item>Trimo</item>
+        <item>Eko</item>
+    </string>
+    <string name="tipe">
+        <item>(none)</item>
+        <item>Xenia</item>
+        <item>Sirion</item>
+        <item>Ayla</item>
+        <item>Sigra</item>
+        <item>Grandmax</item>
+        <item>Luxio</item>
+        <item>Terios</item>
+        <item>Himax</item>
+        <item>Taruna</item>
+        <item>Zebra</item>
+    </string>
 </resources>

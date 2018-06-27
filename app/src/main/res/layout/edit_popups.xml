@@ -59,7 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:entries="@string/tipe" />
     </LinearLayout>
 
     <Button
@@ -67,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:layout_marginTop="20d"
+        android:layout_marginTop="20dp"
         android:text="update" />
 
 </LinearLayout>

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,7 +85,7 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
                 //custom dialog
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.detail_popups);
-                dialog.setTitle("Detail");
+                dialog.setTitle(datalist.get(position).getNoPolisi());
 
                 TextView lbl_no_customer = (TextView) dialog.findViewById(R.id.lbl_no_customer);
                 TextView lbl_catatan = (TextView) dialog.findViewById(R.id.lbl_catatan);
@@ -107,6 +109,28 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
 
         });
 
+        holder.btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // custom dialog edit
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.edit_popups);
+                dialog.setTitle("Edit");
+
+                EditText txt_no_polisi = (EditText) dialog.findViewById(R.id.txt_no_polisi);
+                EditText txt_no_customer = (EditText) dialog.findViewById(R.id.txt_customer);
+                EditText txt_catatan = (EditText) dialog.findViewById(R.id.txt_catatan);
+
+                Spinner lst_tipe = (Spinner) dialog.findViewById(R.id.lst_tipe);
+                Spinner lst_mekanik = (Spinner) dialog.findViewById(R.id.lst_mekanik);
+
+                Button btn_update = (Button) dialog.findViewById(R.id.btn_insert);
+
+
+            }
+        });
+
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +151,8 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
                 builder.setMessage("Hapus Report ini?").setPositiveButton("Yes",dialog).setNegativeButton("No",dialog).show();
             }
         });
+
+
 
     }
 

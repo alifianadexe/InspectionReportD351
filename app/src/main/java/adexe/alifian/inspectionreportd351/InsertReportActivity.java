@@ -73,10 +73,14 @@ public class InsertReportActivity extends AppBaseActivity{
         btn_insert = (Button) findViewById(R.id.btn_insert);
 
         List<String> list_mekanik = new ArrayList<String>();
-        list_mekanik.add("- Pilih Mekanik -");
-        list_mekanik.add("Adi");
-        list_mekanik.add("Domber");
-        list_mekanik.add("Adexe");
+        list_mekanik.add("-Pilih Mekanik-");
+        list_mekanik.add("Reza");
+        list_mekanik.add("Sapta");
+        list_mekanik.add("Abi");
+        list_mekanik.add("Chandika");
+        list_mekanik.add("Trimo");
+        list_mekanik.add("Eko");
+
 
         ArrayAdapter<String> adp_mekanik = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,list_mekanik){
             @Override
@@ -112,11 +116,18 @@ public class InsertReportActivity extends AppBaseActivity{
         lst_mekanik.setAdapter(adp_mekanik);
 
         List<String> list_tipe = new ArrayList<String>();
-        list_tipe.add("- Pilih Tipe -");
-        list_tipe.add("AVANZA");
-        list_tipe.add("TOYOTA");
-        list_tipe.add("MAKENKI");
-        list_tipe.add("DROP");
+        list_tipe.add("(none)");
+        list_tipe.add("Xenia");
+        list_tipe.add("Sirion");
+        list_tipe.add("Ayla");
+        list_tipe.add("Sigra");
+        list_tipe.add("Grandmax");
+        list_tipe.add("Luxio");
+        list_tipe.add("Terios");
+        list_tipe.add("Himax");
+        list_tipe.add("Taruna");
+        list_tipe.add("Zebra");
+
 
 
         ArrayAdapter<String> adp_tipe = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,list_tipe){
