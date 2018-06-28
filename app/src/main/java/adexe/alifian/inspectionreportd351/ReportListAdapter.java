@@ -34,6 +34,7 @@ import adexe.alifian.inspectionreportd351.object.ReportObject;
 public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.ViewHolder> {
 
     private ArrayList<ReportObject> datalist;
+    private ArrayList<ReportObject> datalistCopy;
     private Context context;
     private DatabaseReference databaseReport;
     public ReportListAdapter(Context context, ArrayList<ReportObject> datalist, DatabaseReference databaseReport){
@@ -41,7 +42,8 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
         this.context = context;
         this.datalist = datalist;
         this.databaseReport = databaseReport;
-
+        datalistCopy = new ArrayList<ReportObject>();
+        datalistCopy.addAll(datalist);
         if(datalist.size() == 0){
             Toast.makeText(context,"Nothing to show",Toast.LENGTH_LONG).show();
         }
@@ -220,6 +222,21 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
 
 
 
+    }
+
+    public void filter(String text){
+        datalist.clear();
+        if(text.isEmpty()){
+            datalist.addAll(datalistCopy);
+        }else{
+            text = text.toLowerCase();
+            for(ReportObject reportObject:datalistCopy){
+                if(reportObject.getNoPolisi().toLowerCase().contains(text) || reportObject.getCatatan().toLowerCase().contains(text) || reportObject.getMekanik().toLowerCase().contains(text) || reportObject.getType().toLowerCase().contains(text) || reportObject.getNoTelpCustomer().toLowerCase().contains(text)){
+                    datalist.add(reportObject);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override

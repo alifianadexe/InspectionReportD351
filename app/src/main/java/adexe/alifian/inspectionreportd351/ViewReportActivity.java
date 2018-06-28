@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
@@ -29,6 +30,7 @@ import com.novoda.merlin.registerable.connection.Connectable;
 import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import adexe.alifian.inspectionreportd351.baseactivity.AppBaseActivity;
 import adexe.alifian.inspectionreportd351.object.ReportObject;
@@ -42,9 +44,12 @@ import adexe.alifian.inspectionreportd351.object.ReportObject;
 public class ViewReportActivity extends AppBaseActivity {
 
     private RecyclerView recycleView;
-    private RecyclerView.Adapter adapter;
+    private ReportListAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ReportObject> dataReport;
+    private String TAG = ViewReportActivity.class.getSimpleName();
+
+    ArrayAdapter<String> adapterSearch;
 
     DatabaseReference databaseReport;
     Merlin merlin;
@@ -65,6 +70,8 @@ public class ViewReportActivity extends AppBaseActivity {
 
         layoutManager  = new LinearLayoutManager(this);
         recycleView.setLayoutManager(layoutManager);
+
+
 
         merlin = new Merlin.Builder().withBindableCallbacks().withDisconnectableCallbacks().withConnectableCallbacks().withAllCallbacks().build(getApplicationContext());
 
@@ -146,9 +153,24 @@ public class ViewReportActivity extends AppBaseActivity {
 
         if(searchItem != null){
             searchView = (SearchView) searchItem.getActionView();
+
         }else{
             searchView.setSearchableInfo(searchManager.getSearchableInfo(ViewReportActivity.this.getComponentName()));
         }
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.filter(newText);
+                return false;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }
