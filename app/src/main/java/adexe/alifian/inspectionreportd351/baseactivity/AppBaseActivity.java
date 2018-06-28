@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 
 import adexe.alifian.inspectionreportd351.InsertReportActivity;
 import adexe.alifian.inspectionreportd351.R;
+import adexe.alifian.inspectionreportd351.ViewReportActivity;
 
 /**
  * Created by adexe on 6/21/18.
@@ -43,7 +44,7 @@ public class AppBaseActivity extends AppCompatActivity implements MenuItem.OnMen
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0,0);
         drawerLayout.setDrawerListener(drawerToggle);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // membuat listener setiap menu
@@ -106,7 +107,8 @@ public class AppBaseActivity extends AppCompatActivity implements MenuItem.OnMen
                 Snackbar.make(drawerLayout, "Insert Data", Snackbar.LENGTH_SHORT).show();
                 break;
             case R.id.management_data:
-                Snackbar.make(drawerLayout, "Manage Data", Snackbar.LENGTH_SHORT).show();
+                Intent i1 = new Intent(getApplicationContext(), ViewReportActivity.class);
+                startActivity(i1);
                 break;
             case R.id.manage_user:
                 Snackbar.make(drawerLayout, "Manage User", Snackbar.LENGTH_SHORT).show();

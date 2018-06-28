@@ -25,6 +25,7 @@ public class ReportObject {
     }
 
     public ReportObject(){
+
     }
 
 

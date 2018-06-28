@@ -3,12 +3,14 @@ package adexe.alifian.inspectionreportd351;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import adexe.alifian.inspectionreportd351.object.ReportObject;
 
@@ -118,15 +121,78 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
                 dialog.setContentView(R.layout.edit_popups);
                 dialog.setTitle("Edit");
 
-                EditText txt_no_polisi = (EditText) dialog.findViewById(R.id.txt_no_polisi);
-                EditText txt_no_customer = (EditText) dialog.findViewById(R.id.txt_customer);
-                EditText txt_catatan = (EditText) dialog.findViewById(R.id.txt_catatan);
+                final EditText txt_no_polisi = (EditText) dialog.findViewById(R.id.txt_no_polisi);
+                final EditText txt_no_customer = (EditText) dialog.findViewById(R.id.txt_customer);
+                final EditText txt_catatan = (EditText) dialog.findViewById(R.id.txt_catatan);
 
-                Spinner lst_tipe = (Spinner) dialog.findViewById(R.id.lst_tipe);
-                Spinner lst_mekanik = (Spinner) dialog.findViewById(R.id.lst_mekanik);
+                final Spinner lst_tipe = (Spinner) dialog.findViewById(R.id.spn_mekanik);
+                final Spinner lst_mekanik = (Spinner) dialog.findViewById(R.id.spn_tipe);
 
-                Button btn_update = (Button) dialog.findViewById(R.id.btn_insert);
+                Button btn_update = (Button) dialog.findViewById(R.id.btn_update);
 
+                txt_no_polisi.setText(datalist.get(position).getNoPolisi());
+                txt_no_customer.setText(datalist.get(position).getNoTelpCustomer());
+                txt_catatan.setText(datalist.get(position).getCatatan());
+
+                List<String> list_mekanik = new ArrayList<String>();
+                list_mekanik.add("-Pilih Mekanik-");
+                list_mekanik.add("Reza");
+                list_mekanik.add("Sapta");
+                list_mekanik.add("Abi");
+                list_mekanik.add("Chandika");
+                list_mekanik.add("Trimo");
+                list_mekanik.add("Eko");
+
+
+                ArrayAdapter<String> adp_mekanik = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,list_mekanik);
+                adp_mekanik.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                lst_mekanik.setAdapter(adp_mekanik);
+
+                List<String> list_tipe = new ArrayList<String>();
+                list_tipe.add("(none)");
+                list_tipe.add("Xenia");
+                list_tipe.add("Sirion");
+                list_tipe.add("Ayla");
+                list_tipe.add("Sigra");
+                list_tipe.add("Grandmax");
+                list_tipe.add("Luxio");
+                list_tipe.add("Terios");
+                list_tipe.add("Himax");
+                list_tipe.add("Taruna");
+                list_tipe.add("Zebra");
+
+                ArrayAdapter<String> adp_tipe = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item,list_tipe);
+                adp_tipe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                lst_tipe.setAdapter(adp_tipe);
+
+                lst_mekanik.setSelection(adp_mekanik.getPosition(datalist.get(position).getMekanik()));
+                lst_tipe.setSelection(adp_tipe.getPosition(datalist.get(position).getType()));
+
+                btn_update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        DialogInterface.OnClickListener fandom = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                switch (i){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        updateReport(txt_no_polisi.getText().toString(),lst_mekanik.getSelectedItem().toString(),txt_catatan.getText().toString(),lst_tipe.getSelectedItem().toString(),datalist.get(position).getTimeStamp(),datalist.get(position).getReportId(),txt_no_customer.getText().toString());
+                                        dialog.dismiss();
+                                        Toast.makeText(context,"Report Updated!",Toast.LENGTH_LONG).show();
+                                        break;
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        break;
+                                }
+                            }
+
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setMessage("Update Report ?").setPositiveButton("Yes",fandom).setNegativeButton("No",fandom).show();
+                    }
+                });
+
+                dialog.show();
 
             }
         });
@@ -175,5 +241,11 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Vi
 
         //creating a report object
         ReportObject reportObject = new ReportObject(no_polisi,mekanik,catatan,tipe,id, nowDate,no_customer);
+
+        // set database reference
+        DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Report").child(id);
+
+        //update value
+        dr.setValue(reportObject);
     }
 }

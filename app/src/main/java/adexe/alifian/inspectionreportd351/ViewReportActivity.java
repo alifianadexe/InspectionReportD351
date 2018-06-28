@@ -1,14 +1,18 @@
 package adexe.alifian.inspectionreportd351;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
@@ -45,6 +49,7 @@ public class ViewReportActivity extends AppBaseActivity {
     DatabaseReference databaseReport;
     Merlin merlin;
 
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstance){
@@ -120,7 +125,7 @@ public class ViewReportActivity extends AppBaseActivity {
     public void getStatus(String str, int status){
 
         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), str, TSnackbar.LENGTH_LONG);
-        //snackbar.setActionTextColor(Color.WHITE);
+        snackbar.setActionTextColor(Color.WHITE);
 
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(ContextCompat.getColor(this,status));
@@ -128,6 +133,24 @@ public class ViewReportActivity extends AppBaseActivity {
         TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_search,menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchManager searchManager = (SearchManager) ViewReportActivity.this.getSystemService(Context.SEARCH_SERVICE);
+
+        if(searchItem != null){
+            searchView = (SearchView) searchItem.getActionView();
+        }else{
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(ViewReportActivity.this.getComponentName()));
+        }
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     public void  searchQuery(){
