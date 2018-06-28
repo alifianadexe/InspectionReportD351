@@ -110,9 +110,6 @@ public class AppBaseActivity extends AppCompatActivity implements MenuItem.OnMen
                 Intent i1 = new Intent(getApplicationContext(), ViewReportActivity.class);
                 startActivity(i1);
                 break;
-            case R.id.manage_user:
-                Snackbar.make(drawerLayout, "Manage User", Snackbar.LENGTH_SHORT).show();
-                break;
             case R.id.about:
                 Snackbar.make(drawerLayout, "About", Snackbar.LENGTH_SHORT).show();
                 break;
