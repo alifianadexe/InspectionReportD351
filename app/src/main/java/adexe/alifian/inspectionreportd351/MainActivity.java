@@ -1,10 +1,12 @@
 package adexe.alifian.inspectionreportd351;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
@@ -33,7 +35,7 @@ public class MainActivity extends AppBaseActivity {
 
         crd_report = (CardView) findViewById(R.id.crd_report);
         crd_view_report = (CardView) findViewById(R.id.crd_view_report);
-        crd_manage_report = (CardView) findViewById(R.id.crd_manage_user);
+
 
         crd_report.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,4 +105,19 @@ public class MainActivity extends AppBaseActivity {
         snackbar.show();
     }
 
+
+    @Override
+    public void onBackPressed(){
+        new AlertDialog.Builder(this)
+                .setMessage("Apakah anda yakin ingin keluar?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        MainActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("No",null)
+                .show();
+    }
 }

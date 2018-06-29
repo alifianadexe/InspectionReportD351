@@ -5,7 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="adexe.alifian.inspectionreportd351.MainActivity">
+    tools:context="adexe.alifian.inspectionreportd351.MainActivity"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_weight="0.40"
+        android:padding="20dp"
+        app:srcCompat="@drawable/logo_daiha" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:padding="0dp">
+            android:padding="0dp"
+            app:cardBackgroundColor="@color/ijo">
 
             <TextView
                 android:layout_width="match_parent"
@@ -25,6 +35,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="Insert Report "
                 android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
                 android:textSize="24sp" />
 
         </android.support.v7.widget.CardView>
@@ -39,7 +50,8 @@
             android:id="@+id/crd_view_report"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@android:color/holo_blue_light">
 
             <TextView
                 android:id="@+id/textView3"
@@ -48,7 +60,8 @@
                 android:layout_gravity="center"
                 android:text="View Report"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp" />
         </android.support.v7.widget.CardView>
     </LinearLayout>
 

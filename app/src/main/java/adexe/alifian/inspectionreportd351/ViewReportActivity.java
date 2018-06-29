@@ -132,14 +132,12 @@ public class ViewReportActivity extends AppBaseActivity {
 
     public void getStatus(String str, int status){
 
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), str, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), str, TSnackbar.LENGTH_LONG);
         snackbar.setActionTextColor(Color.WHITE);
 
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(ContextCompat.getColor(this,status));
 
-//        TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
-//        textView.setTextColor(Color.WHITE);
         snackbar.show();
     }
 
