@@ -15,9 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +29,7 @@ import com.novoda.merlin.registerable.connection.Connectable;
 import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import adexe.alifian.inspectionreportd351.baseactivity.AppBaseActivity;
 import adexe.alifian.inspectionreportd351.object.ReportObject;
@@ -132,7 +130,7 @@ public class ViewReportActivity extends AppBaseActivity {
 
     public void getStatus(String str, int status){
 
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), str, TSnackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), str, Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(Color.WHITE);
 
         View snackbarView = snackbar.getView();
