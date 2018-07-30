@@ -29,6 +29,8 @@ import com.novoda.merlin.registerable.connection.Connectable;
 import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 import adexe.alifian.inspectionreportd351.baseactivity.AppBaseActivity;
@@ -117,7 +119,9 @@ public class ViewReportActivity extends AppBaseActivity {
                     dataReport.add(report);
                 }
 
+                Collections.reverse(dataReport);
                 adapter = new ReportListAdapter(ViewReportActivity.this, dataReport,databaseReport);
+
                 recycleView.setAdapter(adapter);
             }
 
